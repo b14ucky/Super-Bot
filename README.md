@@ -1,2 +1,1 @@
-# Super-Bot
-super bot :)
+# Super-Bot :)

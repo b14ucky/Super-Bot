@@ -1,8 +1,8 @@
 {
-  "name": "music-bot",
+  "name": "super-bot",
   "main": "main.js",
   "author": "b14ucky",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "scripts": {
     "start": "node main.js"
   },
@@ -22,5 +22,13 @@
   },
   "keywords": [],
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b14ucky/Super-Bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/b14ucky/Super-Bot/issues"
+  },
+  "homepage": "https://github.com/b14ucky/Super-Bot#readme"
 }

@@ -27,6 +27,7 @@ module.exports = {
             iconURL: int.member.displayAvatarURL({ dynamic: true })
         });
 
+
         if (!res || !res.tracks.length) {
             embed.setTitle('Nie znalazłem utworu o takim tytule!');
             return int.reply({
@@ -34,10 +35,11 @@ module.exports = {
                 ephemeral: true
             });
         }
-
+        
         const queue = await player.createQueue(int.guild, {
             metadata: int.channel
         });
+
 
         try {
             if (!queue.connection) await queue.connect(int.member.voice.channel);
@@ -48,6 +50,16 @@ module.exports = {
                 embeds: [embed],
                 ephemeral: true
             });
+        }
+
+        const inSameChannel = int.member.voice.channelId === queue.connection.channel.id
+        
+        if (queue.playing && !inSameChannel) {
+            embed.setTitle('Musisz być w tym samym kanale co ja, aby użyc tej komendy!')
+            return int.reply({
+                embeds: [embed],
+                ephemeral: true
+            })
         }
 
         embed.setTitle(`Ładowanie ${res.playlist ? 'playlisty' : 'utworu'}...`);

@@ -25,6 +25,16 @@ module.exports = {
             });
         }
 
+        const inSameChannel = int.member.voice.channelId === queue.connection.channel.id
+        
+        if (queue.playing && !inSameChannel) {
+            embed.setTitle('Musisz być w tym samym kanale co ja, aby użyc tej komendy!')
+            return int.reply({
+                embeds: [embed],
+                ephemeral: true
+            })
+        }
+
         const progress = queue.createProgressBar();
         const timestamp = queue.getPlayerTimestamp();
 

@@ -10,18 +10,30 @@ module.exports = {
 
         const embed = new MessageEmbed();
 
+        embed.setTimestamp();
+        embed.setFooter({
+            text: 'super bot od super mnie',
+            iconURL: int.member.displayAvatarURL({ dynamic: true })
+        });
+
         if (!queue || !queue.playing) {
             embed.setColor('#a83232');
-            embed.setTimestamp();
-            embed.setFooter({
-                text: 'super bot od super mnie',
-                iconURL: int.member.displayAvatarURL({ dynamic: true })
-            });
             embed.setTitle('Nic nie jest teraz grane!');
             return int.reply({
                 embeds: [embed],
                 ephemeral: true
             });
+        }
+
+        const inSameChannel = int.member.voice.channelId === queue.connection.channel.id
+        
+        if (queue.playing && !inSameChannel) {
+            embed.setColor('#a83232');
+            embed.setTitle('Musisz być w tym samym kanale co ja, aby użyc tej komendy!')
+            return int.reply({
+                embeds: [embed],
+                ephemeral: true
+            })
         }
 
         const track = queue.current;
@@ -39,12 +51,6 @@ module.exports = {
         const trackDuration = timestamp.progress == 'Infinity' ? 'infinity (live)' : track.duration;
 
         embed.setDescription(`Głośność **${queue.volume}**%\nDługość **${trackDuration}**\nPowtarzanie:  **${methods[queue.repeatMode]}**\nDodano przez  ${track.requestedBy}`);
-
-        embed.setTimestamp();
-        embed.setFooter({
-            text: 'super bot od super mnie',
-            iconURL: int.member.displayAvatarURL({ dynamic: true })
-        });
 
         const saveButton = new MessageButton();
 

@@ -6,7 +6,7 @@ module.exports = {
         guildId: '806943054798913577',
         production: true,
         playing: '/help',
-        version: '1.0.2'
+        version: '1.1.1'
     },
 
     opt: {

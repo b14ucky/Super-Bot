@@ -26,12 +26,23 @@ module.exports = {
             iconURL: int.member.displayAvatarURL({ dynamic: true })
         });
 
+
         if (!queue || !queue.playing) {
             embed.setTitle('Nic nie jest teraz grane!');
             return int.reply({
                 embeds: [embed],
                 ephemeral: true
             });
+        }
+
+        const inSameChannel = int.member.voice.channelId === queue.connection.channel.id
+        
+        if (queue.playing && !inSameChannel) {
+            embed.setTitle('Musisz być w tym samym kanale co ja, aby użyc tej komendy!')
+            return int.reply({
+                embeds: [embed],
+                ephemeral: true
+            })
         }
 
         if (int.options.getString('type') === 'queue') {

@@ -17,10 +17,6 @@ module.exports = {
             .setRequired(false)
         ),
 	async execute(int) {
-        await int.reply({
-            content: 'Szukam...',
-            ephemeral: true
-        });
         const embed = new MessageEmbed();
 
         embed.setColor('#a83232');
@@ -28,6 +24,12 @@ module.exports = {
         embed.setFooter({
             text: 'super bot od super mnie',
             iconURL: int.member.displayAvatarURL({ dynamic: true })
+        });
+        
+        embed.setTitle('Szukam...');
+        await int.reply({
+            embeds: [embed],
+            ephemeral: true
         });
 
         const title = int.options.getString('title');
@@ -44,12 +46,11 @@ module.exports = {
             embed.setTitle(song.title)
                 .setDescription(song.lyrics)
                 .setThumbnail(song.albumArt)
-                .setURL(song.url)
-            return int.editReply({
-                content: null,
-                embeds: [embed]
-            })
-        });
+                .setURL(song.url);
+            });
         
+        return await int.editReply({
+            embeds: [embed]
+        });    
     }
 };

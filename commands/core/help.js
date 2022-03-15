@@ -20,7 +20,7 @@ module.exports = {
 
         embed.setTimestamp();
         embed.setFooter({
-            text: `super bot od super mnie wersja: ${client.config.app.version}`,
+            text: `super bot od super mnie • wersja: ${client.config.app.version}`,
             iconURL: int.member.displayAvatarURL({ dynamic: true })
         });
 

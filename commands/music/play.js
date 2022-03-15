@@ -13,10 +13,6 @@ module.exports = {
         ),
 	async execute(int) {
 
-        const res = await player.search(int.options.getString('url'), {
-            requestedBy: int.member,
-            searchEngine: QueryType.AUTO
-        });
 
         const embed = new MessageEmbed();
 
@@ -27,10 +23,20 @@ module.exports = {
             iconURL: int.member.displayAvatarURL({ dynamic: true })
         });
 
+        embed.setTitle('Szukam...');
+        await int.reply({
+            embeds: [embed],
+            ephemeral: true
+        });
+
+        const res = await player.search(int.options.getString('url'), {
+            requestedBy: int.member,
+            searchEngine: QueryType.AUTO
+        });
 
         if (!res || !res.tracks.length) {
             embed.setTitle('Nie znalazłem utworu o takim tytule!');
-            return int.reply({
+            return int.editReply({
                 embeds: [embed],
                 ephemeral: true
             });
@@ -46,7 +52,7 @@ module.exports = {
         } catch {
             await player.deleteQueue(int.guild.id);
             embed.setTitle('Nie mogę dołączyć do kanału!');
-            return int.reply({
+            return int.editReply({
                 embeds: [embed],
                 ephemeral: true
             });
@@ -56,14 +62,14 @@ module.exports = {
         
         if (queue.playing && !inSameChannel) {
             embed.setTitle('Musisz być w tym samym kanale co ja, aby użyc tej komendy!')
-            return int.reply({
+            return int.editReply({
                 embeds: [embed],
                 ephemeral: true
-            })
+            });
         }
 
         embed.setTitle(`Ładowanie ${res.playlist ? 'playlisty' : 'utworu'}...`);
-        await int.reply({
+        await int.editReply({
             embeds: [embed],
             ephemeral: true
         });

@@ -47,10 +47,10 @@ module.exports = {
                 .setDescription(song.lyrics)
                 .setThumbnail(song.albumArt)
                 .setURL(song.url);
-            });
+            return int.editReply({
+                embeds: [embed]
+            });    
+        });
         
-        return await int.editReply({
-            embeds: [embed]
-        });    
     }
 };

@@ -42,17 +42,11 @@ module.exports = {
             return int.reply({
                 embeds: [embed],
                 ephemeral: true
-            })
+            });
         }
 
         if (int.options.getString('type') === 'queue') {
-            if (queue.repeatMode === 1) {
-                embed.setTitle('Musisz najpierw wyłączyć powtarzenie aktualnego utworu (/loop song)!');
-                return int.reply({
-                    embeds: [embed],
-                    ephemeral: true
-                });
-            }
+            if (queue.repeatMode === 1) queue.setRepeatMode(QueueRepeatMode.OFF);
 
             const success = queue.setRepeatMode(queue.repeatMode === 0 ? QueueRepeatMode.QUEUE : QueueRepeatMode.OFF);
             
@@ -62,13 +56,7 @@ module.exports = {
                 ephemeral: true
             });
         } else {
-            if (queue.repeatMode === 2) {
-                embed.setTitle('Musisz najpierw wyłączyć powtarzenie aktualnego utworu (/loop queue)!');
-                return int.reply({
-                    embeds: [embed],
-                    ephemeral: true
-                });
-            }
+            if (queue.repeatMode === 2) queue.setRepeatMode(QueueRepeatMode.OFF);
 
             const success = queue.setRepeatMode(queue.repeatMode === 0 ? QueueRepeatMode.TRACK : QueueRepeatMode.OFF);
 
